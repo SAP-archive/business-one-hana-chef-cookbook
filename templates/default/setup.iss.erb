@@ -1,0 +1,23 @@
+[{889991FA-CE9B-42A9-A8DA-228219FA65AC}-DlgOrder]
+Dlg0={889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdWelcome-0
+Count=5
+Dlg1={889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdRegisterUser-0
+Dlg2={889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdAskDestPath-0
+Dlg3={889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdSelectFolder-0
+Dlg4={889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdFinish-0
+[{889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdWelcome-0]
+Result=1
+[{889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdRegisterUser-0]
+szName=Windows User
+szCompany=SAP
+Result=1
+[{889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdAskDestPath-0]
+szDir=<%= node[:b1hclient][:platform] == "x86" ? node[:b1][:programfiles] : node[:b1][:programfiles64] %>\SAP\SAP Business One\
+Result=1
+[{889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdSelectFolder-0]
+szFolder=SAP Business One
+Result=1
+[{889991FA-CE9B-42A9-A8DA-228219FA65AC}-SdFinish-0]
+Result=1
+bOpt1=0
+bOpt2=0

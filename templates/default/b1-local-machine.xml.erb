@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE configuration SYSTEM "b1-conf.dtd">
+<configuration>
+
+  <node name="REGISTRY">
+    <node name="HKEY_LOCAL_MACHINE">
+      <node name="SOFTWARE">
+        <node name="SAP">
+          <node name="SAP Manage">
+            <node name="SAP Business One">
+              <leaf kind="single" name="LicenseServer" type="String">
+                <value><%= @v_licenseserver %>:40000</value>
+              </leaf>
+              <leaf kind="single" name="LogBO" type="String">
+                <value>N</value>
+              </leaf>
+              <leaf kind="single" name="LicenseServerProtocol" type="String">
+                <value>HTTPS</value>
+              </leaf>
+              <leaf kind="single" name="EnableSSL" type="String">
+                <value>0</value>
+              </leaf>
+              <leaf kind="single" name="RootCertificate" type="String">
+                <value/>
+              </leaf>
+            </node>
+            <node name="EWA"/>
+            <node name="LicenseManager">
+              <leaf kind="single" name="Machine" type="String">
+                <value><%= @v_licenseserverip %></value>
+              </leaf>
+              <leaf kind="single" name="Port" type="String">
+                <value>40000</value>
+              </leaf>
+            </node>
+            <node name="SBOMail"/>
+            <node name="Service Manager">
+              <node name="Registered Services">
+                <leaf kind="single" name="SBOBackUp" type="String">
+                  <value>B1_BackUpD.dll</value>
+                </leaf>
+                <leaf kind="single" name="SBOMail" type="String">
+                  <value>B1_MailerD.dll</value>
+                </leaf>
+                <leaf kind="single" name="LicenseManager" type="String">
+                  <value>B1_LicenseManagerD.dll</value>
+                </leaf>
+                <leaf kind="single" name="SBODIServer" type="String">
+                  <value>B1_DIServerD.dll</value>
+                </leaf>
+                <leaf kind="single" name="EWA &amp; Support" type="String">
+                  <value>B1_EwaD.dll</value>
+                </leaf>
+                <leaf kind="single" name="Workflow" type="String">
+                  <value>B1_WorkflowManagerD.dll</value>
+                </leaf>
+              </node>
+            </node>
+            <node name="SBOBackUp"/>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+
+</configuration>

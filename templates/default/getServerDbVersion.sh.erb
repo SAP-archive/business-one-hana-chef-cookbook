@@ -1,0 +1,4 @@
+s_serverversion="$(rpm -qa | grep B1ServerToolsSLD)"
+s_dbversion=${s_serverversion:17:7}
+s_dbversion=${s_dbversion/./}
+echo "${s_dbversion}" >> SERVER_INSTALLED_"${s_dbversion}"
