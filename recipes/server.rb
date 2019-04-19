@@ -75,7 +75,7 @@ if !v_is_multispan_archive
 else
     v_multispan_first_archive = v_multispan_archives[0]
     v_multispan_first_archivename = v_multispan_first_archive.split(".").first
-    v_installerlocalfolder = "#{v_installerfolder}\\#{v_multispan_first_archivename}"
+    v_installerlocalfolder = "/usr/sap/installers/#{v_multispan_first_archivename}"
 end
 
 if v_dbversion.to_i >= 920003
