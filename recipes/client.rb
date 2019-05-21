@@ -193,20 +193,45 @@ else
   v_installerZOptions = "/z\"#{v_programfiles}\\SAP\\SAP Business One*#{v_licenseserver}:40000\""
 end
 
-# %W[...] is rudy for making an array. Using this method of passing options so that #{v_licenseserver} gets evaluated correctly
-#
-windows_package 'B1H Client' do
-  package_name "SAP Business One Client (#{v_platformName}-bit)"
-  source "#{v_setupExePath}"
-  #options '/s /z"C:\Program Files (x86)\SAP\SAP Business One*#{v_licenseserver}:40000"'
-  options %W[
-            /s
-            #{v_installerZOptions}
-            ].join(' ')
 
+### Not Working ### >>>>>>>>
+# %W[...] is rudy for making an array. Using this method of passing options so that #{v_licenseserver} gets evaluated correctly
+# windows_package 'B1H Client' do
+#   package_name "SAP Business One Client (#{v_platformName}-bit)"
+#   source "#{v_setupExePath}"
+#   #options '/s /z"C:\Program Files (x86)\SAP\SAP Business One*#{v_licenseserver}:40000"'
+#   options %W[
+#             /s
+#             #{v_installerZOptions}
+#             ].join(' ')
+#   timeout 2700
+#   action :install
+#   returns [0, 3010] # << undefined method `returns' for Chef::Resource::WindowsCookbookPackage
+# end
+# <<<<<<<<
+
+# switching from windows_package to package resource also not working due to error:
+# "Installer type for Windows Package 'B1H Client' not specified and cannot be determined from file extension 'exe'"
+#
+
+
+batch 'Install B1H Client' do
+  cwd "#{v_installerfolderextracted}"
+  code <<-EOH
+  #{v_setupExePath} /s #{v_installerZOptions}
+  EOH
   timeout 2700
-  action :install
+  returns [0, 3010]
+  not_if { ::File.exists?("#{v_installerfolderextracted}\\B1H_CLIENT_INSTALL_COMPLETE")}
 end
+
+
+batch 'record install complete' do
+  code <<-EOH
+  echo > #{v_installerfolderextracted}\\B1H_CLIENT_INSTALL_COMPLETE
+  EOH
+end
+
 
 Chef::Log.info "Update b1-local-machine.xml with licenseserver address"
 

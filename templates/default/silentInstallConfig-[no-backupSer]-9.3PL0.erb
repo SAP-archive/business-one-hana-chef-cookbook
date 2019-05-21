@@ -1,0 +1,94 @@
+# Set AutoStart for SAMBA service?
+B1S_SAMBA_AUTOSTART=none
+# Overwrite the existing B1 Shared folder?
+B1S_SHARED_FOLDER_OVERWRITE=false
+# Password for B1 tech user.
+B1S_TECHUSER_PASSWORD=_8LvWB7_12
+# B1 service user
+B1_SERVICE_USER=b1service0
+# Compress backups
+BCKP_BACKUP_COMPRESS=false
+# N/A
+BCKP_HANA_SERVERS=<servers><server><system address="<%= node['fqdn'] %>"/><database port="30015" user="SYSTEM" password="Toor1234"/></server></servers>
+# Log files location
+BCKP_PATH_LOG=/var/log/SAPBusinessOne/BackupService/logs
+# Backup location
+BCKP_PATH_TARGET=/usr/sap/backup_service/backups
+# Working folder
+BCKP_PATH_WORKING=/tmp/backup_service
+# Create default CD Repository
+CD_REPOSITARY_ACTION=none
+# Create Central Log Repository
+CENTRAL_LOG_ACTION=none
+# Central log repository user password.
+CENTRAL_LOG_PASSWORD=eveNJo3cnu
+# Path to central log repository.
+CENTRAL_LOG_PATH=/usr/sap/SAPBusinessOne/ServerTools/SLD/CentralLogFolder
+# Central log repository username under which is shared.
+CENTRAL_LOG_USER=b1LogUser
+# Delete Shared Folder during uninstall
+DELETE_B1_SHR=false
+# HANA DB Server name or IP
+HANA_DATABASE_SERVER=<%= node['fqdn'] %>
+# HANA DB Server Port
+HANA_DATABASE_SERVER_PORT=30015
+# HANA DB User ID
+HANA_DATABASE_USER_ID=SYSTEM
+# HANA DB Password
+HANA_DATABASE_USER_PASSWORD=<%= @v_systempassword %>
+# HANA DB server will be restarted after installation/uninstallation
+HANA_OPTION_RESTART=true
+# Installation folder
+INSTALLATION_FOLDER=/usr/sap/SAPBusinessOne
+# Correct Permissions on installation folder
+INST_FOLDER_CORRECT_PERMISSIONS=false
+# SLD Landscape Installation Type
+LANDSCAPE_INSTALL_ACTION=create
+# Node type of License Server
+LICENSE_SERVER_NODE=standalone
+# Network address of local machine
+LOCAL_ADDRESS=<%= node['fqdn'] %>
+# Path to central log repository.
+NETWORK_CENTRAL_LOG_PATH=\\<%= node['fqdn'] %>\/mnt/B1LOG
+# Path to repository where DVD is copied.
+NETWORK_REPOSITORY_PATH=\\<%= node['fqdn'] %>\/mnt/B1REPOSITORY
+# Repository username password.
+REPOSITORY_PASSWORD=NR9yQ1y4D0
+# Path to repository where DVD is copied.
+REPOSITORY_PATH=<% @v_installerlocalfolder %>
+# Repository username under which is shared.
+REPOSITORY_USER=b1RepositoryUser
+# Features selected for installation/uninstallation/upgrade
+SELECTED_FEATURES=B1ServerToolsSLD,B1ServerToolsExtensionManager,B1ServerToolsLicense,B1ServerToolsJobService,B1ServerToolsMobileService,B1ServerToolsXApp,B1SLDAgent,B1ServerSHR,B1ServerCommonDB,B1ServerHelp_EN,B1ServerAddons,B1ServerOI,B1AnalyticsOlap,B1AnalyticsTomcatEntSearch,B1AnalyticsTomcatDashboard,B1AnalyticsTomcatReplication,B1AnalyticsTomcatConfiguration,B1AnalyticsTomcatPredictiveAnalysis,B1ServiceLayerComponent
+# Service Port
+SERVICE_PORT=40000
+# Site User ID
+SITE_USER_ID=B1SiteUser
+# Site User Password
+SITE_USER_PASSWORD=<%= @v_siteuserpassword %>
+# SLD Certificate Action
+SLD_CERTIFICATE_ACTION=self
+# Path to SLD Certificate file
+SLD_CERTIFICATE_FILE_PATH=/usr/sap/SAPBusinessOne/Common/tomcat/cert/https.p12
+# Password to SLD Certificate file
+SLD_CERTIFICATE_PASSWORD=lJtZgr9whd
+# SLD Database Name
+SLD_DATABASE_NAME=SLDData
+# Landscape Server Address
+SLD_SERVER_ADDR=<%= node['fqdn'] %>
+# Landscape Server Port
+SLD_SERVER_PORT=40000
+# Landscape Server Protocol
+SLD_SERVER_PROTOCOL=https
+# Landscape Server Type Ondemand/OnPremise
+SLD_SERVER_TYPE=op
+# Windows Domain Action
+SLD_WINDOWS_DOMAIN_ACTION=skip
+# Service Layer load balancer member(s)
+SL_LB_MEMBERS=127.0.0.1:50001,127.0.0.1:50002,127.0.0.1:50003,127.0.0.1:50004
+# Install Service Layer load balancer member(s) only
+SL_LB_MEMBER_ONLY=false
+# Service Layer load balancer port number
+SL_LB_PORT=50000
+# Maximum threads per Service Layer load balancer member
+SL_THREAD_PER_SERVER=24

@@ -75,7 +75,7 @@ if !v_is_multispan_archive
 else
     v_multispan_first_archive = v_multispan_archives[0]
     v_multispan_first_archivename = v_multispan_first_archive.split(".").first
-    v_installerlocalfolder = "/usr/sap/installers/#{v_multispan_first_archivename}"
+    v_installerlocalfolder = "#{v_installerfolder}\\#{v_multispan_first_archivename}"
 end
 
 if v_dbversion.to_i >= 920003
@@ -111,10 +111,11 @@ Chef::Log.info "Variable v_os_platform_version: #{ v_os_platform_version }"
 
 
 if v_additional_repo != nil
-  zypper_repo 'b1h-additional-repo' do
-    repo_name 'b1h-additional-repo'
-    uri v_additional_repo
-    autorefresh true
+  zypper_repository 'b1h-additional-repo' do
+    baseurl v_additional_repo
+    type 'rpm-md'
+    autorefresh false 
+    gpgcheck false
   end
 end
 
@@ -217,10 +218,12 @@ else
   end
 end
 
-#Add silent upgrade config file
+# Add silent upgrade config file
+# 'no-backupSer' versions used due to SAP Note 2697569 (https://sapjira.wdf.sap.corp/browse/B1TEC-1230)
+# 'no-backupSer' versions used due to https://sapjira.wdf.sap.corp/browse/B1TEC-1233
 if v_dbversion.to_i >= 930000 
   template "#{v_installerlocalsubfolder}/silentInstallConfig" do
-    source "silentInstallConfig-9.3PL0.erb"
+    source "silentInstallConfig-[no-backupSer]-9.3PL0.erb"
     variables(
       :host => node['fqdn'],
       :v_siteuserpassword => v_siteuserpassword,
@@ -231,7 +234,7 @@ if v_dbversion.to_i >= 930000
   end
 elsif v_dbversion.to_i >= 920003 
   template "#{v_installerlocalsubfolder}/silentInstallConfig" do
-    source "silentInstallConfig-9.2PL0.erb"
+    source "silentInstallConfig-[no-backupSer]-9.2PL0.erb"
     variables(
       :host => node['fqdn'],
       :v_siteuserpassword => v_siteuserpassword,
@@ -274,12 +277,16 @@ end
 
 # Prerequisites needed for 9.3 PL0 and up
 if v_dbversion.to_i >= 930000 
-  package 'python-crypto' do
+  package 'python-cryptography' do
     action :install
   end
 
-  package 'python-openssl' do
-    action :install
+  if v_os_platform.downcase == "suse" 
+    if v_os_platform_version == "11.3" || v_os_platform_version == "11.4"
+      package 'python-openssl' do
+        action :install
+      end
+    end
   end
 end
 
@@ -301,11 +308,23 @@ if v_os_platform.downcase == "suse"
   end
 end
 
+# Prerequisites needed for 9.3 PL07 and up
+if v_os_platform.downcase == "suse" 
+  if v_os_platform_version == "11.4"
+    if v_dbversion.to_i >= 930170 
+      # required liblua5_1 
+      package 'liblua5_1' do 
+        action :install
+      end
+    end
+  end
+end
+
 # Prerequisites needed for SLES12 SP1 (see SAP Note 2458610) 
 # Required packages should be made available yast repositories (e.g. additional_repo) 
 if v_os_platform.downcase == "suse" 
-  if v_os_platform_version == "12.1" 
-    package 'rpmbuild' do
+  if v_os_platform_version == "12.1" || v_os_platform_version == "12.3" 
+    package 'rpm-build' do
       action :install
     end
 
