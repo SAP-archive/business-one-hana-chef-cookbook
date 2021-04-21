@@ -149,7 +149,14 @@ end
 bash 'set permissions of copied folder' do
   cwd ::File.dirname("#{v_installerlocalfolder}")
   code <<-EOH
-    chmod -R 777 .
+    # ensure all files are owned by root
+	sudo chown root -R .
+
+	# assign all folders 755 or lower
+	sudo find . -type d -print0 | xargs -0 chmod 0755
+
+	# assign all files 644 or lower
+	sudo find . -type f -print0 | xargs -0 chmod 0644
     EOH
   only_if { ::File.exists?("#{v_installerlocalfolder}") }
 end
@@ -195,7 +202,14 @@ end
 bash 'set permissions for extracted files' do
   cwd ::File.dirname("#{v_installerlocalfolder}")
   code <<-EOH
-    chmod -R 777 *
+    # ensure all files are owned by root
+	sudo chown root -R .
+
+	# assign all folders 755 or lower
+	sudo find . -type d -print0 | xargs -0 chmod 0755
+
+	# assign all files 644 or lower
+	sudo find . -type f -print0 | xargs -0 chmod 0644
     EOH
   only_if { ::File.exists?("#{v_installerlocalfolder}") }
 end
