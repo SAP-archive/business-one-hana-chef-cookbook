@@ -126,7 +126,7 @@ end
 directory "#{v_installerlocalfolder}" do
   owner "root"
   group "root"
-  mode 0777
+  mode 0744
   recursive true
   not_if { ::File.exist?("#{v_installerlocalfolder}") }
 end
@@ -153,7 +153,7 @@ bash 'set permissions of copied folder' do
 	sudo chown root -R .
 
 	# assign all folders 755 or lower
-	sudo find . -type d -print0 | xargs -0 chmod 0755
+	sudo find . -type d -print0 | xargs -0 chmod 0744
 
 	# assign all files 644 or lower
 	sudo find . -type f -print0 | xargs -0 chmod 0644
@@ -206,7 +206,7 @@ bash 'set permissions for extracted files' do
 	sudo chown root -R .
 
 	# assign all folders 755 or lower
-	sudo find . -type d -print0 | xargs -0 chmod 0755
+	sudo find . -type d -print0 | xargs -0 chmod 0744
 
 	# assign all files 644 or lower
 	sudo find . -type f -print0 | xargs -0 chmod 0644
@@ -244,7 +244,7 @@ if v_dbversion.to_i >= 930000
       :v_systempassword => v_systempassword,
       :v_installerlocalfolder => v_installerlocalfolder
     )
-    mode 0777
+    mode 0644
   end
 elsif v_dbversion.to_i >= 920003 
   template "#{v_installerlocalsubfolder}/silentInstallConfig" do
@@ -254,7 +254,7 @@ elsif v_dbversion.to_i >= 920003
       :v_siteuserpassword => v_siteuserpassword,
       :v_systempassword => v_systempassword
     )
-    mode 0777
+    mode 0644
   end
 else
   block do
@@ -365,7 +365,7 @@ end
 
 template "#{v_installerlocalfolder}/getServerDbVersion.sh" do
   source "getServerDbVersion.sh.erb"
-  mode 0777
+  mode 0744
 end
 
 execute "Validate B1 Server Install" do
